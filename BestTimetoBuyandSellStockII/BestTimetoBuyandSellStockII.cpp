@@ -1,6 +1,7 @@
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
+        
         if (prices.empty()) return 0;
 
         int maxprofit = 0;
@@ -15,9 +16,11 @@ public:
         }
         return maxprofit;
     }
+    //
     // firstly I thought this is a dynamic programming problem
     // but unfortunately, TLE in O(n^2)
     // It's a greed problem in O(n)
+    //
     int maxProfit2(vector<int> &prices) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
