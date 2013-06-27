@@ -7,8 +7,9 @@ public:
 	void solve(vector<vector<char>> &board) {
 		// Start typing your C/C++ solution below
 		// DO NOT write int main() function
-		if (board.empty())
-			return;
+		
+		if (board.empty()) return;
+		
 		row = board.size();
 		col = board[0].size();
 
