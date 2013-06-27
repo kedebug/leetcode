@@ -3,8 +3,10 @@ public:
     string longestPalindrome(string s) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
+        
         int beg = 0, end = 0;
         int longest = 1;
+        
         for (int i = 0; i < s.size(); i++) {
             dp[i][i] = dp[i+1][i] = true;
         }
