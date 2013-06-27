@@ -3,9 +3,11 @@ public:
     int minimumTotal(vector<vector<int> > &triangle) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
+        
         if (triangle.empty()) return 0;
         
         vector<int> dp[2];
+        
         dp[0].resize(triangle.size());
         dp[1].resize(triangle.size());
         dp[0][0] = triangle[0][0];
