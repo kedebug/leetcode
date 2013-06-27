@@ -3,6 +3,7 @@ public:
     vector<int> getRow(int rowIndex) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
+        
         vector<int> row[2];
         row[0].resize(rowIndex+1);
         row[1].resize(rowIndex+1);
