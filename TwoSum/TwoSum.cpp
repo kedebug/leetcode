@@ -1,4 +1,3 @@
-
 bool lessthan(const pair<int, int>& lhs, const pair<int, int>& rhs) {
     if (lhs.first == rhs.first) 
         return lhs.second < rhs.second;
@@ -10,6 +9,7 @@ public:
     vector<int> twoSum(vector<int> &numbers, int target) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
+        
         vector<pair<int, int>> vnum;
         for (size_t i = 0; i < numbers.size(); i++) {
             vnum.push_back(make_pair(numbers[i], i + 1));
