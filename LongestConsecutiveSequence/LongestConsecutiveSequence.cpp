@@ -3,6 +3,7 @@ public:
     int longestConsecutive(vector<int> &num) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
+        
         priority_queue<int> Q;
         for (int i = 0; i < num.size(); i++) {
             Q.push(num[i]);
