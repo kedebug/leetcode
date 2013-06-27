@@ -10,7 +10,9 @@ public:
             return  *s == '\0';
         
         if (*(p+1) == '*') {
+            //
             // notice: ".*" means repeat '.' 0 or more times
+            //
             while ((*s != '\0' && *p == '.') || *s == *p) {
                 if (isMatch(s, p + 2))
                     return true;
