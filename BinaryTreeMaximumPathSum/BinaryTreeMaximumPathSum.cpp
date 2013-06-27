@@ -7,6 +7,7 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+ 
 const int INFS = 0x3fffffff;
  
 struct NodeInfo {
