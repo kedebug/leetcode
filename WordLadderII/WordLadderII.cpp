@@ -1,4 +1,3 @@
-
 class Solution {
 private:
     vector<string> vdict;
@@ -12,6 +11,7 @@ private:
             unmap[*iter] = vdict.size();
             vdict.push_back(*iter);
         }
+        
         map.clear();
         map.resize(vdict.size());
         for (size_t i = 0; i < vdict.size(); i++) {
@@ -66,6 +66,7 @@ private:
         }
         path.pop_back();
     }
+    
 public:
     vector<vector<string>> findLadders(string start, string end, unordered_set<string> &dict) {
         // Start typing your C/C++ solution below
