@@ -3,6 +3,7 @@ public:
     int lengthOfLongestSubstring(string s) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
+        
         int hash[256];
         memset(hash, -1, sizeof(hash));
         int maxlen = 0, count = 0;
