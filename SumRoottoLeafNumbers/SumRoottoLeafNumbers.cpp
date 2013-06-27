@@ -18,9 +18,7 @@ public:
         
     }
     void dfs(TreeNode *node, int val, int& sum) {
-        if (node == NULL) {
-            return;
-        }
+        if (node == NULL) return;
         
         val *= 10;
         val += node->val;
