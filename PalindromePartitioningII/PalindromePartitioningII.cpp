@@ -6,6 +6,7 @@ public:
 	int minCut(string s) {
 		// Start typing your C/C++ solution below
 		// DO NOT write int main() function
+		
 		int n = s.size();
 		memset(dp, false, sizeof(dp));
 		for (int i = 0; i < n; i++)
