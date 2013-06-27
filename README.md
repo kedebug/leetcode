@@ -8,4 +8,4 @@ The commit message of each problem stands for it's difficulty index, which means
 - 2 Normal
 - 3 Medium
 - 4 Hard
-- 5 More Hard
+- 5 More Harder
