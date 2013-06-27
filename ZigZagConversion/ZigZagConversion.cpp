@@ -3,6 +3,7 @@ public:
     string convert(string s, int nRows) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function    
+        
         if (nRows == 1) return s;
         string result;
         if (s.size() == 0) return result;
