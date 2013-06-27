@@ -3,9 +3,11 @@ public:
     int ladderLength(string start, string end, unordered_set<string> &dict) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
+        
         queue<pair<string, int>> Q;
         unordered_set<string> visited;
         Q.push(make_pair(start, 1));
+        
         while (!Q.empty()) {
             pair<string, int> src = Q.front();
             Q.pop();
