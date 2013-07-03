@@ -7,11 +7,11 @@ public:
         string row(n, '.');
         vector<string> queens(n, row);
         
-        vector<bool> visited_row(n, false);
-        vector<bool> visited_slope1(2*n, false);
-        vector<bool> visited_slope2(2*n, false);
+        vector<bool> visited_col(n, false);
+        vector<bool> visited_slope1(2*n-1, false);
+        vector<bool> visited_slope2(2*n-1, false);
         vector<vector<bool>> visited;
-        visited.push_back(visited_row);
+        visited.push_back(visited_col);
         visited.push_back(visited_slope1);
         visited.push_back(visited_slope2);
         
@@ -32,19 +32,19 @@ public:
         for (int col = 0; col < n; col++) {
             if (visited[0][col] == false && 
                 visited[1][row+col] == false &&
-                visited[2][n-col+row] == false) {
+                visited[2][n-1-col+row] == false) {
                 
                 queens[row][col] = 'Q';
                 visited[0][col] = true;
                 visited[1][row+col] = true;
-                visited[2][n-col+row] = true;
+                visited[2][n-1-col+row] = true;
                 
                 generateNQueens(queens, visited, row + 1, n, result);
                 
                 queens[row][col] = '.';
                 visited[0][col] = false;
                 visited[1][row+col] = false;
-                visited[2][n-col+row] = false;
+                visited[2][n-1-col+row] = false;
             }
         }
     }
