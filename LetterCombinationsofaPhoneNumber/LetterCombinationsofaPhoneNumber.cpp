@@ -1,15 +1,20 @@
 
-const string Solution::keypad[8] = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
-
 class Solution {
-public:
+private:
     static const string keypad[8];
+public:
     vector<string> letterCombinations(string digits) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
         
         vector<string> all_letters;
         string letter;
+        
+        if (digits.empty()) {
+            all_letters.push_back(letter);
+            return all_letters;
+        }
+        
         letterCombinationsHelper(digits, 0, letter, all_letters);
     }
     void letterCombinationsHelper(string& digits, int step, string& letter, vector<string>& all_letters) {
@@ -25,3 +30,5 @@ public:
         }
     }
 };
+
+const string Solution::keypad[8] = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
