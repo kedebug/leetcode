@@ -11,3 +11,7 @@ The commit message of each problem stands for it's difficulty index, which means
 - 5 More Harder
 
 If you have found any method to optimize those solutions, please feel free to get in touch via sunweiqq@gmail.com.
+
+LICENSE
+=============
+No LICENSE, you can use it for any purpose.
