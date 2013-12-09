@@ -1,7 +1,9 @@
-leetcode
+leetcode     [![Total views](https://sourcegraph.com/api/repos/github.com/kedebug/leetcode/counters/views.png)](https://sourcegraph.com/github.com/kedebug/leetcode)
 ============
 
 Solution set for LeetCode.
+
+
 
 The commit message of each problem stands for it's difficulty index, which means:
 - 1 Easy
