@@ -10,23 +10,22 @@
 class Solution {
 public:
     bool isValidBST(TreeNode *root) {
-        // Start typing your C/C++ solution below
-        // DO NOT write int main() function
+        if (root == NULL)
+            return true;
         
-        if (root == NULL) return true;
-        TreeNode *parent = NULL;
-        return isValidBST(root, parent);
+        return valid(root->left, INT_MIN, root->val) && 
+               valid(root->right, root->val, INT_MAX);
     }
     
-    bool isValidBST(TreeNode *current, TreeNode *&parent) {
-        if (current == NULL) return true;     
-        bool valid = true;
-        valid = isValidBST(current->left, parent);
-        if (parent && parent->val >= current->val)
+    bool valid(TreeNode *node, int start, int limit) {
+        if (node == NULL)
+            return true;
+        
+        if (node->val >= limit || node->val <= start)
             return false;
-        parent = current;
-        valid &= isValidBST(current->right, parent);
-        return valid;
+            
+        return valid(node->left, start, node->val) &&
+               valid(node->right, node->val, limit);
     }
 };
 
