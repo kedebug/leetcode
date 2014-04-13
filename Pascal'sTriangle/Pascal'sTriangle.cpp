@@ -1,23 +1,20 @@
 class Solution {
 public:
     vector<vector<int> > generate(int numRows) {
-        // Start typing your C/C++ solution below
-        // DO NOT write int main() function
-        
-        vector<vector<int>> triangle(numRows);
-        
-        if (numRows == 0)
+        vector<vector<int>> triangle;
+        if (numRows == 0) {
             return triangle;
-            
-        triangle[0].push_back(1);
-        
-        for (int i = 1; i < numRows; i++) {
-            triangle[i].push_back(1);
-            for (int j = 1; j < i; j++) {
-                triangle[i].push_back(triangle[i-1][j-1] + triangle[i-1][j]);
-            }
-            triangle[i].push_back(1);
         }
-        return move(triangle);
+        triangle.push_back(vector<int>(1, 1));
+        for (int i = 1; i < numRows; i++) {
+            vector<int>& prev = triangle.back();
+            vector<int> row(i + 1, 0);
+            row[0] = row[i] = 1;
+            for (int j = 0; j < i - 1; j++) {
+                row[j+1] = prev[j] + prev[j+1];
+            }
+            triangle.push_back(row);
+        }
+        return triangle;
     }
 };
