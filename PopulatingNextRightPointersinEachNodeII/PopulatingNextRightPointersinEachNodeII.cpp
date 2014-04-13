@@ -9,48 +9,39 @@
 class Solution {
 public:
     void connect(TreeLinkNode *root) {
-        // Start typing your C/C++ solution below
-        // DO NOT write int main() function
-        
-        TreeLinkNode *link_head = root;
-        
-        while (link_head) {
-            TreeLinkNode *next_link_head = NULL;
-            TreeLinkNode *next_link_node = NULL;
-            
-            while (link_head) {
-                if (link_head->left) {
-                    next_link_head = link_head->left;
-                    next_link_node = next_link_head;
-                }
-                if (link_head->right) {
-                    if (next_link_node) {
-                        next_link_node->next = link_head->right;
-                        next_link_node = next_link_node->next;
+        if (root == NULL) {
+            return;
+        }
+        TreeLinkNode* leftmost = root;
+        while (leftmost) {
+            TreeLinkNode* node = leftmost;
+            TreeLinkNode* prev = NULL;
+            leftmost = NULL;
+            while (node) {
+                if (node->left) {
+                    if (leftmost == NULL) {
+                        leftmost = node->left;
                     }
-                    else {
-                        next_link_head = link_head->right;
-                        next_link_node = next_link_head;
+                    if (prev == NULL) {
+                        prev = node->left;
+                    } else {
+                        prev->next = node->left;
+                        prev = node->left;
                     }
                 }
-                if (next_link_head) break;
-                link_head = link_head->next;
-            }
-            if (next_link_head == NULL) break;
-            
-            while (link_head->next) {
-                if (link_head->next->left) {
-                    next_link_node->next = link_head->next->left;
-                    next_link_node = next_link_node->next;
+                if (node->right) {
+                    if (leftmost == NULL) {
+                        leftmost = node->right;
+                    }
+                    if (prev == NULL) {
+                        prev = node->right;
+                    } else {
+                        prev->next = node->right;
+                        prev = node->right;
+                    }
                 }
-                if (link_head->next->right) {
-                    next_link_node->next = link_head->next->right;
-                    next_link_node = next_link_node->next;
-                }
-                link_head = link_head->next;
+                node = node->next;
             }
-            link_head = next_link_head;
         }
     }
 };
-
