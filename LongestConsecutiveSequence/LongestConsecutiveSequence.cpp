@@ -26,3 +26,32 @@ public:
         return ret;
     }
 };
+
+// O(n) solution
+
+class Solution {
+public:
+    int longestConsecutive(vector<int> &num) {
+        unordered_map<int, int> longest;
+        int result = 0;
+        
+        for (int i = 0; i < num.size(); i++) {
+            if (longest[num[i]] != 0) {
+                continue;
+            }
+            
+            int leftbound = longest[num[i]-1];
+            int rightbound = longest[num[i]+1];
+            int bound = leftbound + rightbound + 1;
+            
+            longest[num[i]] = bound;
+            longest[num[i]-leftbound] = bound;
+            longest[num[i]+rightbound] = bound;
+            
+            if (result < bound) {
+                result = bound;
+            }
+        }
+        return result;
+    }
+};
