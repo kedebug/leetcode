@@ -18,43 +18,31 @@
 class Solution {
 public:
     TreeNode *sortedListToBST(ListNode *head) {
-        // Start typing your C/C++ solution below
-        // DO NOT write int main() function
-        if (head == NULL)
+        if (head == NULL) {
             return NULL;
-        TreeNode *root = new TreeNode(0);
-        dfs(root, head);
-        return root;
-        
-    }
-    void dfs(TreeNode *root, ListNode *node) {
-        if (node->next == NULL) {
-            root->val = node->val;
-            root->left = root->right = NULL;
-            return;
         }
-        ListNode *prev = node;
-        ListNode *slow = node->next;
-        ListNode *fast = node->next->next;
-        while (fast != NULL && fast->next != NULL) {
+        if (head->next == NULL) {
+            return new TreeNode(head->val);
+        }
+        ListNode prevhead(0);
+        prevhead.next = head;
+        ListNode* prev = &prevhead;
+        ListNode* one = head;
+        ListNode* two = head;
+        while (two && two->next) {
             prev = prev->next;
-            slow = slow->next;
-            fast = fast->next->next;
+            one = one->next;
+            two = two->next->next;
         }
-        root->val = slow->val;
-        root->left = new TreeNode(0);
+        TreeNode* root = new TreeNode(one->val);
+        ListNode* temp = one->next;
         prev->next = NULL;
-        dfs(root->left, node);
-        
-        if (slow->next != NULL) {
-            root->right = new TreeNode(0);
-            dfs(root->right, slow->next);
-        }
+        one->next = NULL;
+        root->left = sortedListToBST(head);
+        root->right = sortedListToBST(temp);
+        return root;
     }
 };
-
-
-
 
 
 
