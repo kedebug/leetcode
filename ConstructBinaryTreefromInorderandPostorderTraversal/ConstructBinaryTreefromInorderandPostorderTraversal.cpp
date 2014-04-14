@@ -9,41 +9,27 @@
  */
 class Solution {
 public:
-    TreeNode *buildTree(vector<int>& inorder, vector<int>& postorder) {
-        // Start typing your C/C++ solution below
-        // DO NOT write int main() function
-        
-        int size = inorder.size();
-        if (size == 0) return NULL;
-        
-        TreeNode *root = new TreeNode(0);
-        build(root, size, inorder, 0, postorder, 0);
-        return root;
+    TreeNode *buildTree(vector<int> &inorder, vector<int> &postorder) {
+        if (inorder.empty()) {
+            return NULL;
+        }
+        return dfs(inorder, 0, inorder.size() - 1, postorder, 0, postorder.size() - 1);
     }
-    
-    void build(TreeNode *root, int size, vector<int>& inorder, int inLeft, vector<int>& postorder, int postLeft) {
-        assert(size > 0);
-        
-        int pivot = postorder[postLeft+size-1];
-        root->val = pivot;
-        
-        if (size == 1) return;
-        
-        int sizeleft = 0;
-        for (int i = 0; i < size; i++) {
-            if (inorder[inLeft+i] == pivot)
-                break;
-            sizeleft += 1;
+    TreeNode* dfs(vector<int>& inorder, int l1, int r1, vector<int>& postorder, int l2, int r2) {
+        if (l1 > r1) {
+            return NULL;
         }
-        
-        if (sizeleft > 0) {
-            root->left = new TreeNode(0);
-            build(root->left, sizeleft, inorder, inLeft, postorder, postLeft);
+        if (l1 == r1) {
+            return new TreeNode(inorder[l1]);
         }
-        int sizeright = size - sizeleft - 1;
-        if (sizeright > 0) {
-            root->right = new TreeNode(0);
-            build(root->right, sizeright, inorder, inLeft + sizeleft + 1, postorder, postLeft + sizeleft);
+        TreeNode* root = new TreeNode(postorder[r2]);
+        for (int i = l1; i <= r1; i++) {
+            if (inorder[i] == postorder[r2]) {
+                root->left = dfs(inorder, l1, i - 1, postorder, l2, l2 + i - l1 - 1);
+                root->right = dfs(inorder, i + 1, r1, postorder, l2 + i - l1, r2 - 1);
+                return root;
+            }
         }
+        return NULL;
     }
 };
