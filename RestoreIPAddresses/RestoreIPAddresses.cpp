@@ -1,44 +1,40 @@
 class Solution {
 public:
     vector<string> restoreIpAddresses(string s) {
-        // Start typing your C/C++ solution below
-        // DO NOT write int main() function
-        
-        vector<string> addresses;
-        string ip_address;
-        restoreIpAddressesHelper(s, 0, 0, ip_address, addresses);
-        return addresses;
+        vector<string> result;
+        vector<int> sk;
+        dfs(result, sk, s, 0, 0);
+        return result;
     }
     
-    void restoreIpAddressesHelper(string& s, int position, 
-        int blocks, string& ip_address, vector<string>& addresses) {
-        
-        if (position == s.size() && blocks == 4) {
-            addresses.push_back(ip_address);
+    void dfs(vector<string>& result, vector<int>& sk, const string& s, int val, int pos) {
+        if (sk.size() > 4) {
             return;
         }
-
-        // some pruning skills;
-        if (blocks >= 4) return;
-        if ((4-blocks) * 3 < s.size() - position) return;
-        if ((4-blocks) * 3 == s.size() - position) {
-            for (int i = 0; i < 4 - blocks; i += 3)
-                if (s[position + i] > '2') return;
+        
+        if (pos == s.size()) {
+            if (sk.size() < 4 || val != 0) {
+                return;
+            }
+            string ip;
+            ip += to_string(sk[0]);
+            for (int i = 1; i < 4; i++) {
+                ip += ".";
+                ip += to_string(sk[i]);
+            }
+            result.push_back(ip);
+            return;
         }
         
-        int ip = 0;
-        int ip_length = ip_address.size();
-        for (int i = position; i < s.size(); i++) {
-            ip *= 10;
-            ip += s[i] - '0';
-            if (ip > 255) break;
-            if (blocks != 0 && i == position)
-                ip_address += '.';
-            ip_address += s[i];
-            restoreIpAddressesHelper(s, i + 1, blocks + 1, ip_address, addresses);
-            if (ip == 0) break;
+        val = val * 10 + s[pos] - '0';
+        if (val > 255) {
+            return;
         }
-        // pass-by-reference is more effective than pass-by-value
-        ip_address.erase(ip_length, ip_address.size() - ip_length);
+        if (val != 0) {
+            dfs(result, sk, s, val, pos + 1);
+        }
+        sk.push_back(val);
+        dfs(result, sk, s, 0, pos + 1);
+        sk.pop_back();
     }
 };
