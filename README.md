@@ -12,7 +12,7 @@ The commit message of each problem stands for it's difficulty index, which means
 - 4 Hard
 - 5 Much Harder
 
-If you have found any method to optimize those solutions, please feel free to get in touch via sunweiqq@gmail.com.
+If you have found any method to optimize those solutions, please feel free to get in touch via kedebug0@gmail.com.
 
 LICENSE
 =============
