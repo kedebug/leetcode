@@ -1,23 +1,18 @@
 class Solution {
 public:
-    string longestCommonPrefix(vector<string>& strs) {
-        // Start typing your C/C++ solution below
-        // DO NOT write int main() function
-        string common;
-        if (strs.size() == 0)
-            return common;
-        common = strs[0];
-        for (size_t i = 1; i < strs.size(); i++) {
-            size_t j;
-            for (j = 0; j < common.size(); j++) {
-                if (common[j] != strs[i][j]) break;
-            }
-            if (j == 0) {
-                common = "";
-                return common;
-            }
-            else common = common.substr(0, j);
+    string longestCommonPrefix(vector<string> &strs) {
+        if (strs.empty()) {
+            return string();
         }
-        return common;
+        for (int i = 0; i < strs[0].size(); i++) {
+            for (int j = 1; j < strs.size(); j++) {
+                if (i == strs[j].size()) {
+                    return strs[j];
+                } else if (i < strs[j].size() && strs[0][i] != strs[j][i]) {
+                    return strs[j].substr(0, i);
+                }
+            }
+        }
+        return strs[0];
     }
 };
