@@ -9,30 +9,40 @@
 class Solution {
 public:
     ListNode *mergeKLists(vector<ListNode *> &lists) {
-        // Start typing your C/C++ solution below
-        // DO NOT write int main() function
+        return merge(lists, 0, lists.size() - 1);
+    }
+    ListNode* merge(vector<ListNode*>& lists, int left, int right) {
+        if (left > right) {
+            return NULL;
+        }
+        if (left == right) {
+            return lists[left];
+        }
+        int mid = (left + right) / 2;
+        ListNode* l1 = merge(lists, left, mid);
+        ListNode* l2 = merge(lists, mid + 1, right);
         
-        int n = lists.size();
         ListNode head(0);
-        ListNode *node = &head;
-        
-        //
-        // Time complexity O(n*K)
-        // n stands for the max length of the list in lists
-        //
-        while (true) {
-            int minValue = INT_MAX;
-            int pos = -1;
-            for (int i = 0; i < n; i++) {  
-                if (lists[i] != NULL && minValue > lists[i]->val) {
-                    pos = i;
-                    minValue = lists[i]->val;
-                }  
+        ListNode* curr = &head;
+        while (l1 && l2) {
+            if (l1->val < l2->val) {
+                curr->next = l1;
+                l1 = l1->next;
+            } else {
+                curr->next = l2;
+                l2 = l2->next;
             }
-            if (pos == -1) break;
-            node->next = lists[pos];
-            node = node->next;
-            lists[pos] = lists[pos]->next;
+            curr = curr->next;
+        }
+        while (l1) {
+            curr->next = l1;
+            l1 = l1->next;
+            curr = curr->next;
+        }
+        while (l2) {
+            curr->next = l2;
+            l2 = l2->next;
+            curr = curr->next;
         }
         return head.next;
     }
