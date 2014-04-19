@@ -1,47 +1,31 @@
 class Solution {
 public:
     vector<string> generateParenthesis(int n) {
-        // Start typing your C/C++ solution below
-        // DO NOT write int main() function
-        
         vector<string> result;
-        if (n == 0) return result;
-        
-        string parenthesis;
-        DFS(parenthesis, 0, 0, n, result);
-        
-        return move(result);
+        string s;
+        if (n == 0) {
+            return result;
+        }
+        dfs(result, s, n, n);
+        return result;
     }
-    
-    void DFS(string& parenthesis, int left, int right, int n, vector<string>& result) {
-        if (right > left) return;
-        
-        if (left == right && left == n) {
-            result.push_back(parenthesis);
+    void dfs(vector<string>& result, string& s, int left, int right) {
+        if (left > right) {
             return;
         }
-        
-        if (left == right && left < n) {
-            parenthesis += '(';
-            DFS(parenthesis, left + 1, right, n, result);
-            parenthesis.erase(parenthesis.size() - 1, 1);
+        if (left == 0 && right == 0) {
+            result.push_back(s);
             return;
         }
-        if (left > right && left < n) {
-            parenthesis += '(';
-            DFS(parenthesis, left + 1, right, n, result);
-            parenthesis.erase(parenthesis.size() - 1, 1);
-            
-            parenthesis += ')';
-            DFS(parenthesis, left, right + 1, n, result);
-            parenthesis.erase(parenthesis.size() - 1, 1);
+        if (left >= 1) {
+            s.push_back('(');
+            dfs(result, s, left - 1, right);
+            s.pop_back();
         }
-        if (left == n && right < n) {
-            parenthesis += ')';
-            DFS(parenthesis, left, right + 1, n, result);
-            parenthesis.erase(parenthesis.size() - 1, 1);
+        if (right >= 1) {
+            s.push_back(')');
+            dfs(result, s, left, right - 1);
+            s.pop_back();
         }
-        
     }
 };
-
