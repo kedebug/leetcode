@@ -1,34 +1,32 @@
-
 class Solution {
-private:
-    static const string keypad[8];
 public:
     vector<string> letterCombinations(string digits) {
-        // Start typing your C/C++ solution below
-        // DO NOT write int main() function
+        map<int, string> keypad;
+        keypad[2] = string("abc");
+        keypad[3] = string("def");
+        keypad[4] = string("ghi");
+        keypad[5] = string("jkl");
+        keypad[6] = string("mno");
+        keypad[7] = string("pqrs");
+        keypad[8] = string("tuv");
+        keypad[9] = string("wxyz");
         
-        vector<string> all_letters;
+        vector<string> result;
         string letter;
-        
-        if (digits.empty()) {
-            all_letters.push_back(letter);
-            return all_letters;
-        }
-        
-        letterCombinationsHelper(digits, 0, letter, all_letters);
+        dfs(result, letter, digits, 0, keypad);
+        return result;
     }
-    void letterCombinationsHelper(string& digits, int step, string& letter, vector<string>& all_letters) {
-        if (step == digits.size()) {
-            all_letters.push_back(letter);
+    void dfs(vector<string>& result, string& letter, string& digits, int pos, map<int, string>& keypad) {
+        if (pos == digits.size()) {
+            result.push_back(letter);
             return;
         }
-        int x = digits[step] - '2';
-        for (int i = 0; i < keypad[x].size(); i++) {
-            letter += keypad[x][i];
-            letterCombinationsHelper(digits, step + 1, letter, all_letters);
-            letter.erase(letter.size() - 1, 1);
+        int x = digits[pos] - '0';
+        string s = keypad[x];
+        for (int i = 0; i < s.size(); i++) {
+            letter.push_back(s[i]);
+            dfs(result, letter, digits, pos + 1, keypad);
+            letter.pop_back();
         }
     }
 };
-
-const string Solution::keypad[8] = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
