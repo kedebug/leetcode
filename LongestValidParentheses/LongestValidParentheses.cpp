@@ -12,16 +12,14 @@ public:
             if (s[i] == '(') {
                 count_left += 1;
                 valid_count += 1;
-            }
-            else {
+            } else {
                 valid_count -= 1;
             }
             
             if (valid_count < 0) {
                 valid_count = 0;
                 count_left = 0;
-            }
-            else if (valid_count == 0) {
+            } else if (valid_count == 0) {
                 max_valid = max(max_valid, count_left);
             }
         }
@@ -32,16 +30,14 @@ public:
             if (s[i] == ')') {
                 count_right += 1;
                 valid_count += 1;
-            }
-            else {
+            } else {
                 valid_count -= 1;
             }
             
             if (valid_count < 0) {
                 valid_count = 0;
                 count_right = 0;
-            }
-            else if (valid_count == 0) {
+            } else if (valid_count == 0) {
                 max_valid = max(max_valid, count_right);
             }
         }
