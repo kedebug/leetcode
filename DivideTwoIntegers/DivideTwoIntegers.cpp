@@ -1,41 +1,30 @@
 class Solution {
 public:
     int divide(int dividend, int divisor) {
-        // Start typing your C/C++ solution below
-        // DO NOT write int main() function
-        
-        bool signed_flag = false;
-        unsigned unsigned_dividend, unsigned_divisor;
-        
-        if (dividend < 0) {
-            unsigned_dividend = -dividend;
-            signed_flag ^= true;
+        long long int divid = dividend;
+        long long int divis = divisor;
+        bool neg = false;
+        if (divid < 0) {
+            neg = neg ? false : true;
+            divid = -divid;
         } 
-        else 
-            unsigned_dividend = dividend;
-            
-        if (divisor < 0) {
-            unsigned_divisor = -divisor;
-            signed_flag ^= true;
+        if (divis < 0) {
+            neg = neg ? false : true;
+            divis = -divis;
         }
-        else 
-            unsigned_divisor = divisor;
-        
-        unsigned result = unsignedDivide(unsigned_dividend, unsigned_divisor);
-        return signed_flag ? -result : result;
-    }
-    
-    unsigned unsignedDivide(unsigned dividend, unsigned divisor) {
-        unsigned result = 0;
-        while (dividend >= divisor) {
-            unsigned num = divisor;
-            unsigned shift = 0;
-            while (((unsigned long long)num << 1) <= dividend) {
-                num <<= 1;
+        long long int result = 0;
+        while (divid >= divis) {
+            long long int x = divis;
+            int shift = 0;
+            while ((x << 1) <= divid) {
+                x <<= 1;
                 shift += 1;
             }
-            dividend -= num;
-            result |= 1 << shift;
+            result += 1 << shift;
+            divid -= x;
+        }
+        if (neg) {
+            result = -result;
         }
         return result;
     }
