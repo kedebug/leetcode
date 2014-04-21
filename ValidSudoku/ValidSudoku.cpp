@@ -1,26 +1,20 @@
 class Solution {
 public:
-    bool visited_cells[20][20];
-    bool visited_row[20][20];
-    bool visited_col[20][20];
-    
-    bool isValidSudoku(vector<vector<char>>& board) {
-        // Start typing your C/C++ solution below
-        // DO NOT write int main() function
-        
-        memset(visited_cells, false, sizeof(visited_cells));  
-        memset(visited_row, false, sizeof(visited_row));    
-        memset(visited_col, false, sizeof(visited_col));  
+    bool isValidSudoku(vector<vector<char>> &board) {
+        vector<vector<bool>> rows(9, vector<bool>(9, false));
+        vector<vector<bool>> cols(9, vector<bool>(9, false));
+        vector<vector<bool>> cells(9, vector<bool>(9, false));
         
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 if (board[i][j] != '.') {
-                    int cell = (i / 3) * 3 + j / 3;
-                    int x = board[i][j] - '0';
-                    if (visited_cells[cell][x] || visited_row[i][x] || visited_col[j][x])
+                    int x = board[i][j] - '1';
+                    if (rows[i][x] || cols[j][x] || cells[(j/3)*3+i/3][x]) {
                         return false;
-                    visited_cells[cell][x] = true;
-                    visited_row[i][x] = visited_col[j][x] = true;
+                    }
+                    rows[i][x] = true;
+                    cols[j][x] = true;
+                    cells[(j/3)*3+i/3][x] = true;
                 }
             }
         }
