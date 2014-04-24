@@ -1,46 +1,41 @@
-
-const int dir[4][2] = {0, 1, 1, 0, 0, -1, -1, 0}; // right, down, left, up
-
 class Solution {
 public:
-    vector<int> spiralOrder(vector<vector<int> > &matrix) {
-        // Start typing your C/C++ solution below
-        // DO NOT write int main() function
-        
-        int M = matrix.size();
-        if (M == 0) return vector<int>();
-        int N = matrix[0].size();    
-        if (N == 0) return vector<int>();
-        
-        vector<int> result(M * N, 0);
-        int x = 0, y = -1;
-        int row = M, col = N + 1;
-        bool go_horizon = true;
-        int i = 0, k = 0;
-        while (i < M * N) {
+	vector<int> spiralOrder(vector<vector<int> > &matrix) {
+		vector<int> result;
+		if (matrix.empty()) {
+		    return result;
+		}
+		int row = matrix.size();
+		int col = matrix[0].size() + 1;
+        int dir[4][2] = {0, 1, 1, 0, 0, -1, -1, 0};
+        int x = 0;
+        int y = -1;
+        int k = 0;
+        int count = 0;
+        bool horizon = true;
+        while (count < matrix.size() * matrix[0].size()) {
             int dx = dir[k%4][0];
             int dy = dir[k%4][1];
-            k += 1;
+            k++;
             
-            if (go_horizon) {
-                go_horizon = false;
-                col -= 1;
-                for (int j = 0; j < col; j++, i++) {
+            if (horizon) {
+                horizon = false;
+                col--;
+                for (int i = 0; i < col; i++, count++) {
                     x += dx;
                     y += dy;
-                    result[i] = matrix[x][y];
+                    result.push_back(matrix[x][y]);
                 }
-            }
-            else {
-                go_horizon = true;
-                row -= 1;
-                for (int j = 0; j < row; j++, i++) {
+            } else {
+                horizon = true;
+                row--;
+                for (int i = 0; i < row; i++, count++) {
                     x += dx;
                     y += dy;
-                    result[i] = matrix[x][y];
+                    result.push_back(matrix[x][y]);
                 }
             }
         }
         return result;
-    }
+	}
 };
