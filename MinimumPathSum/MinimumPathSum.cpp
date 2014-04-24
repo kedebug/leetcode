@@ -23,3 +23,31 @@ public:
         return dp[m-1][n-1];
     }
 };
+
+// O(n) space
+class Solution {
+public:
+    int minPathSum(vector<vector<int> > &grid) {
+        if (grid.empty()) {
+            return 0;
+        }
+        int m = grid.size();
+        int n = grid[0].size();
+        vector<vector<int>> dp(2, vector<int>(n, 0));
+        int T1 = 1;
+        int T2 = 0;
+        for (int i = 0; i < m; i++) {
+            T1 ^= 1;
+            T2 ^= 1;
+            dp[T2][0] = dp[T1][0] + grid[i][0];
+            for (int j = 1; j < n; j++) {
+                if (i == 0) {
+                    dp[T2][j] = dp[T2][j-1] + grid[i][j];
+                } else {
+                    dp[T2][j] = grid[i][j] + min(dp[T1][j], dp[T2][j-1]);
+                }
+            }
+        }
+        return dp[T2][n-1];
+    }
+};
