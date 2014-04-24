@@ -1,32 +1,28 @@
 class Solution {
 public:
     string addBinary(string a, string b) {
-        // Start typing your C/C++ solution below
-        // DO NOT write int main() function
-        
         string c;
-        int len_a = a.size();
-        int len_b = b.size();
+        reverse(a.begin(), a.end());
+        reverse(b.begin(), b.end());
         int carry = 0;
-        for (int i = 0; i < min(len_a, len_b); i++) {
-            int x = a[len_a - i - 1] - '0';
-            int y = b[len_b - i - 1] - '0';
-            c += (x + y + carry) % 2 + '0';
-            carry = (x + y + carry) / 2;
+        int i = 0;
+        while (i < a.size() && i < b.size()) {
+            carry += a[i] - '0' + b[i] - '0';
+            c += carry % 2 + '0';
+            carry /= 2;
+            i++;
         }
-        if (len_a > len_b) {
-            for (int i = len_b; i < len_a; i++) {
-                int x = a[len_a - i - 1] - '0';
-                c += (x + carry) % 2 + '0';
-                carry = (x + carry) / 2;
-            }
+        while (i < a.size()) {
+            carry += a[i] - '0';
+            c += carry % 2 + '0';
+            carry /= 2;
+            i++;
         }
-        else if (len_a < len_b) {
-            for (int i = len_a; i < len_b; i++) {
-                int x = b[len_b - i - 1] - '0';
-                c += (x + carry) % 2 + '0';
-                carry = (x + carry) / 2;
-            }
+        while (i < b.size()) {
+            carry += b[i] - '0';
+            c += carry % 2 + '0';
+            carry /= 2;
+            i++;
         }
         while (carry) {
             c += carry % 2 + '0';
