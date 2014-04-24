@@ -1,12 +1,12 @@
 class Solution {
 public:
 	vector<int> spiralOrder(vector<vector<int> > &matrix) {
-		vector<int> result;
-		if (matrix.empty()) {
-		    return result;
-		}
-		int row = matrix.size();
-		int col = matrix[0].size() + 1;
+        vector<int> result;
+        if (matrix.empty()) {
+            return result;
+        }
+        int row = matrix.size();
+        int col = matrix[0].size() + 1;
         int dir[4][2] = {0, 1, 1, 0, 0, -1, -1, 0};
         int x = 0;
         int y = -1;
