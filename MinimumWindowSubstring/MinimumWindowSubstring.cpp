@@ -1,40 +1,36 @@
 class Solution {
 public:
     string minWindow(string S, string T) {
-        // Start typing your C/C++ solution below
-        // DO NOT write int main() function
-        
-        int needFind[256] = {0};
-        int hasFound[256] = {0};
-        int count = 0, minLen = INT_MAX;
-        string result = "";
-        
-        for (int i = 0; i < T.size(); i++)
-            needFind[T[i]] += 1;
-        
-        for (int low = 0, high = 0; high < S.size(); high++) {
-            if (needFind[S[high]] == 0) 
+        string result("");
+        map<char, int> needed;
+        map<char, int> found;
+        for (int i = 0; i < T.size(); i++) {
+            needed[T[i]]++;
+        }
+        int count = 0;
+        int minlen = S.size() + 1;
+        for (int i = 0, j = 0; j < S.size(); j++) {
+            if (needed[S[j]] == 0) {
                 continue;
-            
-            hasFound[S[high]] += 1;
-            if (hasFound[S[high]] <= needFind[S[high]])
-                count += 1;
-            
+            }
+            found[S[j]]++;
+            if (found[S[j]] <= needed[S[j]]) {
+                count++;
+            }
             if (count == T.size()) {
-                while (low < high) {
-                    if (needFind[S[low]] == 0) {
-                        low += 1;
-                        continue;
-                    }
-                    if (hasFound[S[low]] > needFind[S[low]])
-                        hasFound[S[low]] -= 1;
-                    else
+                while (i <= j) {
+                    if (found[S[i]] == 0) {
+                        i++;
+                    } else if (found[S[i]] > needed[S[i]]) {
+                        found[S[i]]--;
+                        i++;
+                    } else {
                         break;
-                    low += 1;
+                    }
                 }
-                if (minLen > high - low + 1) {
-                    minLen = high - low + 1;
-                    result = S.substr(low, minLen);
+                if (minlen > j - i + 1) {
+                    minlen = j - i + 1;
+                    result = S.substr(i, minlen);
                 }
             }
         }
