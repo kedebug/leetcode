@@ -9,48 +9,23 @@
 class Solution {
 public:
     ListNode *deleteDuplicates(ListNode *head) {
-        // Start typing your C/C++ solution below
-        // DO NOT write int main() function
-        
-        if (head == NULL)
-            return head;
-        
-        ListNode preHead(0);
-        preHead.next = head;
-        
-        ListNode *preprev = &preHead;
-        ListNode *prev = head;
-        ListNode *node = head->next;
-        bool flag = false;
-        
-        while (node != NULL) {
-            if (prev->val == node->val) {
-                ListNode *del = node;
-                node = node->next;
-                flag = true;
-                delete del;
-            }
-            else {
-                if (flag) {
-                    flag = false;
-                    preprev->next = node;
-                    prev = node;
-                    node = node->next;
-                } 
-                else {
-                    preprev = prev;
-                    prev = node;
-                    node = node->next;
+        ListNode prevhead(0);
+        ListNode* prev = &prevhead;
+        ListNode* curr = head;
+        while (curr) {
+            if (curr->next && curr->val == curr->next->val) {
+                ListNode* next = curr->next;
+                while (next && next->val == curr->val) {
+                    next = next->next;
                 }
+                curr = next;
+            } else {
+                prev->next = curr;
+                prev = prev->next;
+                curr = curr->next;
             }
         }
-        if (flag) {
-            preprev->next = NULL;
-            delete prev;
-        }
-        
-        return preHead.next;
+        prev->next = NULL;
+        return prevhead.next;
     }
 };
-
-// Accepted after my first commit, yeah.
