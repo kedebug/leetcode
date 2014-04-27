@@ -10,3 +10,20 @@ public:
         return gray_code;
     }
 };
+
+// More comprehensible solution
+class Solution {
+public:
+    vector<int> grayCode(int n) {
+        vector<int> result(1, 0);
+        for (int i = 0; i < n; i++) {
+            int curr = result.size();
+            while (curr) {
+                curr--;
+                int x = result[curr];
+                result.push_back((1 << i) + x);
+            }
+        }
+        return result;
+    }
+};
