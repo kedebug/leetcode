@@ -1,25 +1,21 @@
 class Solution {
 public:
-    vector<string> anagrams(vector<string>& strs) {
-        // Start typing your C/C++ solution below
-        // DO NOT write int main() function
-        
-        map<string, vector<int>> dict;
-        
+    vector<string> anagrams(vector<string> &strs) {
+        vector<string> result;
+        map<string, int> exists;
         for (int i = 0; i < strs.size(); i++) {
-            string copy_string(strs[i]);
-            sort(copy_string.begin(), copy_string.end());
-            dict[copy_string].push_back(i);
+            string u = strs[i];
+            sort(u.begin(), u.end());
+            if (exists.find(u) == exists.end()) {
+                exists[u] = i;
+            } else {
+                if (exists[u] >= 0) {
+                    result.push_back(strs[exists[u]]);
+                    exists[u] = -1;
+                }
+                result.push_back(strs[i]);
+            }
         }
-        
-        vector<string> anagrams;
-        for (auto iter = dict.begin(); iter != dict.end(); iter++) {
-            vector<int>& string_id = iter->second;
-            if (string_id.size() <= 1) continue;
-            for (int i = 0; i < string_id.size(); i++)
-                anagrams.push_back(strs[string_id[i]]);
-        }
-        
-        return move(anagrams);
+        return result;
     }
 };
