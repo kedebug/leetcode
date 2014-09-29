@@ -45,3 +45,22 @@ public:
         }
     }
 };
+
+// solution 2
+class Solution {
+public:
+    void reverseWords(string &s) {
+        string result;
+        for (int i = 0, start = 0; i < s.size(); i++) {
+            if (s[i] == ' ') {
+                if (i > start) {
+                    result = s.substr(start, i - start) + " " + result;
+                }
+                start = i + 1;
+            } else if (i == s.size() - 1) {
+                result = s.substr(start, i + 1 - start) + " " + result;
+            }
+        }
+        s = result.substr(0, result.size() - 1);
+    }
+};
