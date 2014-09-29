@@ -1,43 +1,74 @@
+// NFA
 class Solution {
 public:
-    bool isNumber(const char *s) {
-        // Start typing your C/C++ solution below
-        // DO NOT write int main() function
-        
-        while (*s != '\0' && *s == ' ') s += 1;
-        if (*s == '\0') return false;
-        
-        const char *e = s + strlen(s) - 1;
-        while (s <= e && *e == ' ')  e -= 1;
-        
-        bool is_digit = false;
-        bool has_dot = false;
-        bool has_exp = false;
-        
-        if (*s == '+' || *s == '-') s += 1;
-        
-        while (s <= e) {
-            if ('0' <= *s && *s <= '9') {
-                is_digit = true;
+    bool accept(const char* s, int& i, string expected) {
+        for (int j = 0; j < expected.size(); j++) {
+            if (s[i] == expected[j]) {
+                i += 1;
+                return true;
             }
-            else if (*s == '.') {
-                if (has_dot || has_exp)
-                    return false;
-                has_dot = true;
-            }
-            else if (*s == 'e') {
-                if (!is_digit || has_exp)
-                    return false;
-                has_exp = true;
-                is_digit = false;
-            }
-            else if (*s == '+' || *s == '-') {
-                if (*(s-1) != 'e')
-                    return false;
-            }
-            else return false;
-            s += 1;
         }
-        return is_digit;
+        return false;
+    }
+    
+    bool acceptRun(const char* s, int& i, string expected) {
+        bool found = false;
+        int count = 0;
+        while (s[i] != '\0') {
+            found = false;
+            for (int j = 0; j < expected.size(); j++) {
+                if (s[i] == expected[j]) {
+                    i++;
+                    count++;
+                    found = true;
+                }
+            }
+            if (!found) {
+                break;
+            }
+        }
+        if (count > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    bool isNumber(const char *s) {
+        string digits("0123456789");
+        
+        int i = 0;
+        
+        acceptRun(s, i, " ");
+        
+        bool beforedot = false;
+        bool afterdot = false;
+        
+        accept(s, i, "+-");
+        beforedot = acceptRun(s, i, digits);
+        
+        if (accept(s, i, ".")) {
+            if (acceptRun(s, i, digits)) {
+                afterdot = true;
+            }
+        }
+        
+        if (!beforedot && !afterdot) {
+            return false;
+        }
+        
+        if (accept(s, i, "eE")) {
+            accept(s, i, "+-");
+            if (!acceptRun(s, i, digits)) {
+                return false;
+            }
+        }
+   
+        while (s[i] != '\0') {
+            if (s[i] != ' ') {
+                return false;
+            }
+            i++;
+        }
+        return true;
     }
 };
