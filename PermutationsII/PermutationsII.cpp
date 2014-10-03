@@ -29,3 +29,33 @@ public:
         return true;
     }
 };
+
+// recursive solution
+class Solution {
+public:
+    void helper(vector<vector<int>>& result, vector<int>& num, int x) {
+        if (x == num.size()) {
+            result.push_back(num);
+            return;
+        }
+        helper(result, num, x + 1);
+        map<int, bool> hash;
+        hash[num[x]] = true;
+        for (int i = x + 1; i < num.size(); i++) {
+            if (hash[num[i]]) {
+                continue;
+            }
+            hash[num[i]] = true;
+            swap(num[x], num[i]);
+            helper(result, num, x + 1);
+            swap(num[x], num[i]);
+        }
+    }
+    
+    vector<vector<int> > permuteUnique(vector<int> &num) {
+        sort(num.begin(), num.end());
+        vector<vector<int>> result;
+        helper(result, num, 0);
+        return move(result);
+    }
+};
