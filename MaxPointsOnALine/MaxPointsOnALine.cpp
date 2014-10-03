@@ -32,35 +32,46 @@ public:
         int result = 2;
         sort(points.begin(), points.end());
         for (int i = 0; i < n; i++) {
-            int dup = 1;
-            while (i + 1 < n && points[i+1] == points[i]) {
-                i++;
-                dup++;
-            }
-            result = max(result, dup);
-            if (i + 1 == n) {
-                return result;
-            }
-            vector<double> slopes;
+            vector<pair<int, int>> slopes;
+            int count = 0;
             for (int j = i + 1; j < n; j++) {
-                if (points[j].x == points[i].x) {
-                    slopes.push_back(numeric_limits<double>::max());
-                } else {
-                    slopes.push_back((double)(points[j].y - points[i].y) / (points[j].x - points[i].x));
+                int x = points[i].x - points[j].x;
+                int y = points[i].y - points[j].y;
+                int z = gcd(x, y);
+                if (z != 0) {
+                    x /= z, y /= z;
                 }
-            }
-            sort(slopes.begin(), slopes.end());
-            int count = 1;
-            result = max(result, dup + 1);
-            for (int k = 1; k < slopes.size(); k++) {
-                if (slopes[k] == slopes[k-1]) {
+                if (x == 0 && y == 0) {
                     count++;
                 } else {
-                    count = 1;
+                    slopes.push_back(make_pair(x, y));
                 }
-                result = max(result, count + dup);
+            }
+            if (slopes.empty()) {
+                result = max(result, count + 1);
+                continue;
+            }
+            sort(slopes.begin(), slopes.end());
+            int curr = 2 + count;
+            result = max(result, curr);
+            for (int j = 1; j < slopes.size(); j++) {
+                if (slopes[j] == slopes[j-1]) {
+                    curr++;
+                } else {
+                    curr = 2 + count;
+                }
+                result = max(result, curr);
             }
         }
         return result;
+    }
+    
+    int gcd(int a, int b) {
+        while (b != 0) {
+            int t = b;
+            b = a % b;
+            a = t;
+        }
+        return a;
     }
 };
