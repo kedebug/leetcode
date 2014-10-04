@@ -1,24 +1,19 @@
-
 class Solution {
 public:
     void sortColors(int A[], int n) {
-        // Start typing your C/C++ solution below
-        // DO NOT write int main() function
-        
-        int low = 0, high = n - 1;
-        int mid = 0;
-        
-        while (mid <= high) {
-            if (A[mid] == 0) {
-                A[mid++] = A[low];
-                A[low++] = 0;
-            }
-            else if (A[mid] == 1) {
-                mid += 1;
-            }
-            else if (A[mid] == 2) {
-                A[mid] = A[high];
-                A[high--] = 2;
+        int p0 = -1;
+        int p1 = 0;
+        int p2 = n;
+        while (p1 < p2) {
+            if (A[p1] == 1) {
+                p1++;
+            } else if (A[p1] == 0) {
+                swap(A[p0+1], A[p1]);
+                p0++;
+                p1++;
+            } else {
+                swap(A[p1], A[p2-1]);
+                p2--;
             }
         }
     }
